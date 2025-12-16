@@ -4,10 +4,19 @@
 
 ## Quick Start
 
+### Create a New Project
+
 ```bash
 npx zero-setup-biome my-app
 cd my-app
 npm run dev
+```
+
+### Migrate Existing Project
+
+```bash
+cd your-existing-project
+npx zero-setup-biome migrate
 ```
 
 That's it. No ESLint/Prettier conflicts. No configuration hell. Just code.
@@ -20,19 +29,47 @@ That's it. No ESLint/Prettier conflicts. No configuration hell. Just code.
 - 🎨 **VSCode Integration** — Format on save, auto-organize imports
 - 🔒 **Zero Conflicts** — No ESLint vs Prettier wars
 
-## Options
+## Commands
+
+### Create
 
 ```bash
 npx zero-setup-biome <project-name> [options]
 
 Options:
   -t, --template <template>  Template to use (react-ts) [default: react-ts]
-  --skip-install            Skip installing dependencies
-  --skip-git                Skip git initialization
-  --pm <package-manager>    Package manager (npm, pnpm, yarn, bun)
-  -v, --version             Output version number
-  -h, --help                Display help
+  --skip-install             Skip installing dependencies
+  --skip-git                 Skip git initialization
+  --pm <package-manager>     Package manager (npm, pnpm, yarn, bun)
+  -v, --version              Output version number
+  -h, --help                 Display help
 ```
+
+### Migrate
+
+Migrate existing projects from ESLint/Prettier to Biome:
+
+```bash
+npx zero-setup-biome migrate [options]
+
+Options:
+  --skip-install   Skip installing Biome
+  --skip-cleanup   Keep ESLint/Prettier configs and dependencies
+  --skip-git       Skip creating safety git commit
+  --dry-run        Show changes without applying them
+  -h, --help       Display help
+```
+
+**What it does:**
+- ✅ Migrates ESLint rules to `biome.json` (uses Biome's official migration)
+- ✅ Migrates Prettier config to `biome.json`
+- ✅ **Preserves your Prettier settings** (quotes, semicolons, line width, etc.)
+- ✅ **Auto-detects Jest/Vitest** and adds global variables
+- ✅ **Excludes generated folders** (`gen/`, `dist/`, `build/`, etc.)
+- ✅ Removes ESLint/Prettier dependencies and plugins
+- ✅ Updates `package.json` scripts
+- ✅ **Optional auto-format** to apply Biome formatting in one commit
+- ✅ Creates a safety git commit before changes
 
 ## Why Biome?
 
