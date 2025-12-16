@@ -1,5 +1,5 @@
 import path from "node:path";
-import { confirm, select, spinner } from "@clack/prompts";
+import { confirm, isCancel, select, spinner } from "@clack/prompts";
 import fs from "fs-extra";
 import pc from "picocolors";
 
@@ -182,6 +182,11 @@ export async function promptTrailingCommasForEs5(): Promise<"none" | "all"> {
     initialValue: "none",
   });
 
+  // Handle cancellation - default to "none"
+  if (isCancel(result)) {
+    return "none";
+  }
+
   return result as "none" | "all";
 }
 
@@ -303,10 +308,10 @@ export async function applyPrettierCompatibility(
     config.linter.rules.correctness.useExhaustiveDependencies = "warn";
   }
 
-  // Add Jest/Vitest globals for test files
+  // Add Jest/Vitest globals for test files (merge with existing)
   config.javascript = config.javascript || {};
-  config.javascript.globals = [
-    // Jest globals
+  const existingGlobals: string[] = config.javascript.globals || [];
+  const jestVitestGlobals = [
     "jest",
     "describe",
     "it",
@@ -316,9 +321,9 @@ export async function applyPrettierCompatibility(
     "afterEach",
     "beforeAll",
     "afterAll",
-    // Vitest globals
     "vi",
   ];
+  config.javascript.globals = [...new Set([...existingGlobals, ...jestVitestGlobals])];
 
   // Disable organize imports assistant (can be disruptive during migration)
   config.assist = config.assist || {};

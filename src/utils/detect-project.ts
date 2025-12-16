@@ -29,37 +29,45 @@ const PRETTIER_CONFIGS = [
 ];
 
 export async function detectProject(cwd: string = process.cwd()): Promise<ProjectInfo> {
-  // Detect ESLint config
-  const eslintConfig = ESLINT_CONFIGS.find((file) => fs.existsSync(path.join(cwd, file)));
-
-  // Check for ESLint config in package.json
-  let hasESLintInPkg = false;
   const pkgPath = path.join(cwd, "package.json");
+
+  // Read package.json once
+  let pkg: { eslintConfig?: unknown; prettier?: unknown } | null = null;
   if (await fs.pathExists(pkgPath)) {
-    const pkg = await fs.readJson(pkgPath);
-    hasESLintInPkg = !!pkg.eslintConfig;
+    try {
+      pkg = await fs.readJson(pkgPath);
+    } catch {
+      pkg = null;
+    }
   }
 
-  // Detect Prettier config
-  const prettierConfig = PRETTIER_CONFIGS.find((file) => fs.existsSync(path.join(cwd, file)));
-
-  // Check for Prettier config in package.json
-  let hasPrettierInPkg = false;
-  if (await fs.pathExists(pkgPath)) {
-    const pkg = await fs.readJson(pkgPath);
-    hasPrettierInPkg = !!pkg.prettier;
+  // Detect ESLint config file (async)
+  let eslintConfig: string | undefined;
+  for (const file of ESLINT_CONFIGS) {
+    if (await fs.pathExists(path.join(cwd, file))) {
+      eslintConfig = file;
+      break;
+    }
   }
+  const hasESLintInPkg = !!pkg?.eslintConfig;
 
-  // Detect existing Biome config
-  const hasBiome = fs.existsSync(path.join(cwd, "biome.json"));
+  // Detect Prettier config file (async)
+  let prettierConfig: string | undefined;
+  for (const file of PRETTIER_CONFIGS) {
+    if (await fs.pathExists(path.join(cwd, file))) {
+      prettierConfig = file;
+      break;
+    }
+  }
+  const hasPrettierInPkg = !!pkg?.prettier;
 
-  // Detect package.json
-  const hasPackageJson = await fs.pathExists(pkgPath);
+  // Detect existing Biome config (async)
+  const hasBiome = await fs.pathExists(path.join(cwd, "biome.json"));
 
   return {
     hasESLint: !!eslintConfig || hasESLintInPkg,
     hasPrettier: !!prettierConfig || hasPrettierInPkg,
-    hasPackageJson,
+    hasPackageJson: pkg !== null,
     hasBiome,
     eslintConfig,
     prettierConfig,

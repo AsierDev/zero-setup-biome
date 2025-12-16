@@ -1,7 +1,7 @@
 import os from "node:os";
 import path from "node:path";
 import fs from "fs-extra";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   detectProject,
   getESLintConfigs,
@@ -18,6 +18,13 @@ describe("detectProject", () => {
       name: "test-project",
       version: "1.0.0",
     });
+  });
+
+  afterEach(async () => {
+    // Clean up temp directory
+    if (tempDir) {
+      await fs.remove(tempDir);
+    }
   });
 
   it("detects ESLint .eslintrc.json config", async () => {

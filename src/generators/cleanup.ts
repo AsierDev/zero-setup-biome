@@ -87,7 +87,6 @@ export async function updatePackageScripts(
   cwd: string,
 ): Promise<{ updated: boolean; scripts: Record<string, string> }> {
   const pkgPath = path.join(cwd, "package.json");
-  const pkg = await fs.readJson(pkgPath);
 
   const newScripts: Record<string, string> = {
     lint: "biome check .",
@@ -95,13 +94,21 @@ export async function updatePackageScripts(
     format: "biome format --write .",
   };
 
+  let pkg: Record<string, unknown>;
+  try {
+    pkg = await fs.readJson(pkgPath);
+  } catch {
+    // package.json missing or invalid, skip updating
+    return { updated: false, scripts: newScripts };
+  }
+
   const shouldUpdate = await confirm({
     message: "Update package.json scripts to use Biome?",
     initialValue: true,
   });
 
   if (shouldUpdate === true) {
-    pkg.scripts = { ...pkg.scripts, ...newScripts };
+    pkg["scripts"] = { ...(pkg["scripts"] as Record<string, string>), ...newScripts };
     await fs.writeJson(pkgPath, pkg, { spaces: 2 });
     return { updated: true, scripts: newScripts };
   }
