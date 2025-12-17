@@ -126,7 +126,13 @@ export async function cleanupOldDeps(
 
   // Read package.json to find deps
   const pkgPath = path.join(cwd, "package.json");
-  const pkg = await fs.readJson(pkgPath);
+  let pkg: Record<string, unknown>;
+  try {
+    pkg = await fs.readJson(pkgPath);
+  } catch {
+    s.stop(pc.yellow("⚠ Could not read package.json, skipping dependency cleanup"));
+    return { depsRemoved: [], filesRemoved: [] };
+  }
   const depsToRemove = findDepsToRemove(pkg);
 
   s.stop(`Found ${depsToRemove.length} ESLint/Prettier packages`);

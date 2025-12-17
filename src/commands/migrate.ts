@@ -167,7 +167,7 @@ export async function runMigrate(options: MigrateOptions): Promise<void> {
   await applyPrettierCompatibility(cwd, prettierConfig, relaxedRules);
 
   // 12. Validate migration before cleanup
-  const _validation = await validateMigration(cwd);
+  await validateMigration(cwd);
 
   // 13. Cleanup old dependencies (only if migration was successful)
   if (!options.skipCleanup) {

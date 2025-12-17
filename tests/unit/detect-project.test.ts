@@ -95,18 +95,20 @@ describe("detectProject", () => {
   it("detects package manager from lockfile when no user agent", async () => {
     // Clear user agent to force lockfile detection
     const originalUserAgent = process.env["npm_config_user_agent"];
-    delete process.env["npm_config_user_agent"];
+    try {
+      delete process.env["npm_config_user_agent"];
 
-    await fs.writeFile(path.join(tempDir, "pnpm-lock.yaml"), "");
+      await fs.writeFile(path.join(tempDir, "pnpm-lock.yaml"), "");
 
-    const result = await detectProject(tempDir);
+      const result = await detectProject(tempDir);
 
-    // Restore user agent
-    if (originalUserAgent) {
-      process.env["npm_config_user_agent"] = originalUserAgent;
+      expect(result.packageManager).toBe("pnpm");
+    } finally {
+      // Restore user agent (handles empty string correctly)
+      if (originalUserAgent !== undefined) {
+        process.env["npm_config_user_agent"] = originalUserAgent;
+      }
     }
-
-    expect(result.packageManager).toBe("pnpm");
   });
 });
 

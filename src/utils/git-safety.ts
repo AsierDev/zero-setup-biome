@@ -37,7 +37,7 @@ export async function createSafetyCommit(cwd: string = process.cwd()): Promise<b
 
   if (shouldCommit === true) {
     try {
-      await execa("git", ["add", "."], { cwd });
+      await execa("git", ["add", "-u"], { cwd });
       await execa("git", ["commit", "-m", "chore: backup before Biome migration", "--no-verify"], {
         cwd,
       });

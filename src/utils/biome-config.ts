@@ -240,9 +240,9 @@ export async function applyPrettierCompatibility(
   const eslintExcludes = eslintIgnorePatterns
     .filter((p) => p && !p.startsWith("!")) // Skip negations
     .map((p) => {
-      // Normalize pattern for Biome
-      const normalized = p.replace(/\/$/, ""); // Remove trailing slash
-      return normalized.startsWith("!") ? normalized : `!${normalized}`;
+      // Normalize pattern for Biome: remove trailing slash and prefix with "!"
+      const normalized = p.replace(/\/$/, "");
+      return `!${normalized}`;
     });
 
   // Combine all exclusion patterns
