@@ -4,7 +4,7 @@
   "description": "Zero-config CLI to scaffold React + TypeScript projects with Biome",
   "type": "module",
   "bin": {
-    "zero-setup-biome": "./dist/cli.js"
+    "zero-setup-biome": "dist/cli.js"
   },
   "files": [
     "dist",
@@ -52,9 +52,14 @@
     "vite",
     "scaffolding"
   ],
+  "author": "AsierDev",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tu-usuario/zero-setup-biome"
-  }
+    "url": "git+https://github.com/AsierDev/zero-setup-biome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AsierDev/zero-setup-biome/issues"
+  },
+  "homepage": "https://github.com/AsierDev/zero-setup-biome#readme"
 }
