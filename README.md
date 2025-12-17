@@ -1,10 +1,17 @@
 # zero-setup-biome
 
+[![npm version](https://img.shields.io/npm/v/zero-setup-biome.svg?style=flat-square)](https://www.npmjs.com/package/zero-setup-biome)
+[![license](https://img.shields.io/npm/l/zero-setup-biome.svg?style=flat-square)](https://github.com/AsierDev/zero-setup-biome/blob/main/LICENSE)
+[![downloads](https://img.shields.io/npm/dt/zero-setup-biome.svg?style=flat-square)](https://www.npmjs.com/package/zero-setup-biome)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/AsierDev/zero-setup-biome)
+
 > Zero-config CLI to scaffold React + TypeScript projects with Biome — 22x faster than ESLint
 
 ## Quick Start
 
 ### Create a New Project
+
+![Create Project Demo](.github/assets/demo.gif)
 
 ```bash
 npx zero-setup-biome my-app
@@ -13,6 +20,8 @@ npm run dev
 ```
 
 ### Migrate Existing Project
+
+![Migrate Project Demo](.github/assets/migrate.gif)
 
 ```bash
 cd your-existing-project
