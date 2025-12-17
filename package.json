@@ -1,6 +1,6 @@
 {
   "name": "zero-setup-biome",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Zero-config CLI to scaffold React + TypeScript projects with Biome",
   "type": "module",
   "bin": {
