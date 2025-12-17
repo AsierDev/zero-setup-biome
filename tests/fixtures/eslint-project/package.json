@@ -1,0 +1,13 @@
+{
+    "name": "eslint-fixture-project",
+    "version": "1.0.0",
+    "scripts": {
+        "lint": "eslint ."
+    },
+    "devDependencies": {
+        "eslint": "^8.0.0",
+        "@typescript-eslint/parser": "^6.0.0",
+        "@typescript-eslint/eslint-plugin": "^6.0.0",
+        "eslint-plugin-react": "^7.0.0"
+    }
+}

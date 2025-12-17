@@ -7,7 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2024-XX-XX
+### Added
+
+- **`migrate` command** — Migrate existing projects from ESLint/Prettier to Biome
+  - Automatic ESLint config migration (uses Biome's official `biome migrate eslint`)
+  - Automatic Prettier config migration (`biome migrate prettier`)
+  - **Preserves Prettier settings** (quotes, semicolons, trailing commas, line width)
+  - **Auto-detects and excludes generated folders** (`gen/`, `dist/`, `build/`)
+  - **Reads ESLint ignorePatterns** and applies them to Biome
+  - **Jest/Vitest globals** automatically configured
+  - **Optional auto-format** to apply Biome formatting in one commit
+  - Smart dependency cleanup (detects all ESLint/Prettier plugins with regex)
+  - Git safety commit before migration
+  - Interactive prompts for relaxed rules, script updates, and cleanup
+  - `--dry-run` mode for previewing changes
+  - Project detection for ESLint, Prettier, and existing Biome configs
+  - Biome version validation (requires ≥1.7)
+
 
 ### Added
 

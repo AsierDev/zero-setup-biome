@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import { runCreate } from "./commands/create.js";
+import { runMigrate } from "./commands/migrate.js";
 import type { PackageManager, Template } from "./types/index.js";
 import { TEMPLATES, VERSION } from "./utils/constants.js";
 
@@ -31,6 +32,22 @@ program
         skipGit: opts.skipGit,
         packageManager: opts.pm as PackageManager | undefined,
       },
+    });
+  });
+
+program
+  .command("migrate")
+  .description("Migrate existing project from ESLint/Prettier to Biome")
+  .option("--skip-install", "Skip installing Biome", false)
+  .option("--skip-cleanup", "Keep ESLint/Prettier configs and dependencies", false)
+  .option("--skip-git", "Skip creating safety git commit", false)
+  .option("--dry-run", "Show changes without applying them", false)
+  .action(async (opts) => {
+    await runMigrate({
+      skipInstall: opts.skipInstall,
+      skipCleanup: opts.skipCleanup,
+      skipGit: opts.skipGit,
+      dryRun: opts.dryRun,
     });
   });
 
