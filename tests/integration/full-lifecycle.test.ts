@@ -4,6 +4,9 @@ import { execa } from "execa";
 import fs from "fs-extra";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+// Use local tsx binary to avoid npx cache issues in CI
+const TSX_BIN = path.resolve("node_modules/.bin/tsx");
+
 /**
  * Integration tests that simulate real-world usage of the CLI.
  * These tests perform actual installations and verify the generated projects work correctly.
@@ -18,7 +21,7 @@ describe("Full project lifecycle (integration)", () => {
     projectPath = path.join(tempDir, projectName);
 
     // Generate project WITH dependency installation
-    await execa("npx", ["tsx", path.resolve("src/cli.ts"), projectName, "--skip-git"], {
+    await execa(TSX_BIN, [path.resolve("src/cli.ts"), projectName, "--skip-git"], {
       cwd: tempDir,
       timeout: 120000, // 2 minutes for npm install
     });

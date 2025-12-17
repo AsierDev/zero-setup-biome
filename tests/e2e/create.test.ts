@@ -4,6 +4,9 @@ import { execa } from "execa";
 import fs from "fs-extra";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
+// Use local tsx binary to avoid npx cache issues in CI
+const TSX_BIN = path.resolve("node_modules/.bin/tsx");
+
 describe("create command (e2e)", () => {
   let tempDir: string;
   const projectName = "test-e2e-app";
@@ -20,8 +23,8 @@ describe("create command (e2e)", () => {
 
   it("generates project with correct structure", async () => {
     await execa(
-      "npx",
-      ["tsx", path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
+      TSX_BIN,
+      [path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
       { cwd: tempDir },
     );
 
@@ -36,8 +39,8 @@ describe("create command (e2e)", () => {
 
   it("interpolates project name in package.json", async () => {
     await execa(
-      "npx",
-      ["tsx", path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
+      TSX_BIN,
+      [path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
       { cwd: tempDir },
     );
 
@@ -47,8 +50,8 @@ describe("create command (e2e)", () => {
 
   it("does not include ESLint or Prettier configs", async () => {
     await execa(
-      "npx",
-      ["tsx", path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
+      TSX_BIN,
+      [path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
       { cwd: tempDir },
     );
 
@@ -60,8 +63,8 @@ describe("create command (e2e)", () => {
 
   it("generated project has valid biome config", async () => {
     await execa(
-      "npx",
-      ["tsx", path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
+      TSX_BIN,
+      [path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
       { cwd: tempDir },
     );
 
@@ -74,8 +77,8 @@ describe("create command (e2e)", () => {
 
   it("includes Biome as dev dependency", async () => {
     await execa(
-      "npx",
-      ["tsx", path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
+      TSX_BIN,
+      [path.resolve("src/cli.ts"), projectName, "--skip-install", "--skip-git"],
       { cwd: tempDir },
     );
 
