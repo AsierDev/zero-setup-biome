@@ -11,7 +11,7 @@
 
 ### Create a New Project
 
-![Create Project Demo](.github/assets/demo.gif)
+![Create Project Demo](https://raw.githubusercontent.com/AsierDev/zero-setup-biome/v0.1.1/.github/assets/demo.gif)
 
 ```bash
 npx zero-setup-biome my-app
@@ -21,7 +21,7 @@ npm run dev
 
 ### Migrate Existing Project
 
-![Migrate Project Demo](.github/assets/migrate.gif)
+![Migrate Project Demo](https://raw.githubusercontent.com/AsierDev/zero-setup-biome/v0.1.1/.github/assets/migrate.gif)
 
 ```bash
 cd your-existing-project
